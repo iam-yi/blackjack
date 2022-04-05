@@ -11,21 +11,40 @@ const masterDeck = buildMasterDeck();
 
 /*----- app's state (variables) -----*/
 let shuffledDeck = [];
+let dealerHand = [];
+let playerHand = [];
 
 
 /*----- cached element references -----*/
-const cardContainer = document.getElementById('card');
+const playerCardContainer = document.getElementById('playerCard');
+const dealerCardContainer = document.getElementById('dealerCard');
 
 
 
 /*----- event listeners -----*/
+//top of button
 const dealBTN = document.getElementById('deal-btn');
 const hitBTN = document.getElementById('hit-btn');
-const resetBTN = document.getElementById('reset-btn');
+const standBTN = document.getElementById('stand-btn');
 
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
+
+//money button
+const oneBTN = document.getElementById('chip1');
+const tenBTN = document.getElementById('chip10');
+const hundredBTN = document.getElementById('chip100');
+const txt= document.getElementById('currentBet');
+
+oneBTN.addEventListener('click', selected1);
+tenBTN.addEventListener('click', selected10);
+hundredBTN.addEventListener('click', selected100);
+
+//button button
+const resetBTN = document.getElementById('reset-btn');
+
 resetBTN.addEventListener('click', init);
+//top of button
 
 
 
@@ -35,11 +54,11 @@ init();
 
 function init() {
   shuffledDeck = getNewShuffledDeck();
-  render ();
 }
 
 function render() {
   console.log(shuffledDeck);
+  renderHand();
 }
 
 function getNewShuffledDeck() {
@@ -71,28 +90,57 @@ function buildMasterDeck() {
   return deck;
 }
 
-function dealCard() {
-  createCard();
-  createCard();
+function renderHand() {
+  clearRenderHand();
+  playerHand.forEach(function(card) {
+    const cardEl = document.createElement('div'); 
+    cardEl.className = `card ${card.face}`;
+    playerCardContainer.appendChild(cardEl);   
+  })
+  dealerHand.forEach(function(card, index) {
+    const cardEl = document.createElement('div'); 
+    cardEl.className = index === 0 ? `card ${card.face}` : `card back`
+    dealerCardContainer.appendChild(cardEl);   
+  });
+}
 
+function clearRenderHand() {
+  Array.from(playerCardContainer.children).forEach(function(child) {
+    playerCardContainer.removeChild(child);
+  });
+
+  Array.from(dealerCardContainer.children).forEach(function(child) {
+    dealerCardContainer.removeChild(child);
+  });
+}
+
+function dealCard() {
+  for(let i = 0; i<2; i++){
+    playerHand.push(shuffledDeck.pop());
+    dealerHand.push(shuffledDeck.pop());
+  }
   if (dealBTN.style.display !== "none") {
-      dealBTN.style.display = "none";
+    dealBTN.style.display = "none";
   } 
+  render();
 }
 
 function addCard() {
-  createCard();
+    playerHand.push(shuffledDeck.pop());
+    render();
 }
 
-function createCard() {
-   
-    const cardEl = document.createElement('div'); 
-    cardEl.className = `card ${shuffledDeck[Math.floor(Math.random()*shuffledDeck.length)].face}`;
-    cardContainer.appendChild(cardEl);   
+function selected1() {
+  txt.innerHTML = 1;
+} 
+  
+function selected10() {
+  txt.innerHTML = 10;
 }
 
-
-
+function selected100() {
+  txt.innerHTML = 100;
+}
 
 
 
