@@ -53,12 +53,15 @@ section{
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-around;
+ 
 } 
 
  #chip1, #chip10, #chip100 {
   border-radius: 50%;
-  width: auto;
   height: auto;
+  width: auto;
   float: left;
-} 
+}
+
 

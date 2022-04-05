@@ -1,9 +1,9 @@
 /*----- constants -----*/
 const suits = ['s', 'c', 'd', 'h'];
 const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A'];
-const chip1 = 10;
-const chip10 = 100;
-const chip100 = 500;
+const chip1 = 1;
+const chip10 = 10;
+const chip100 = 100;
 
 // Build a 'master' deck of 'card' objects used to create shuffled decks
 const masterDeck = buildMasterDeck();
@@ -11,6 +11,8 @@ const masterDeck = buildMasterDeck();
 
 /*----- app's state (variables) -----*/
 let shuffledDeck = [];
+
+
 /*----- cached element references -----*/
 const cardContainer = document.getElementById('card');
 
@@ -19,9 +21,11 @@ const cardContainer = document.getElementById('card');
 /*----- event listeners -----*/
 const dealBTN = document.getElementById('deal-btn');
 const hitBTN = document.getElementById('hit-btn');
+const resetBTN = document.getElementById('reset-btn');
 
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
+resetBTN.addEventListener('click', init);
 
 
 
@@ -51,7 +55,6 @@ function getNewShuffledDeck() {
   return shuffledDeck;
 }
 
-
 function buildMasterDeck() {
   const deck = [];
   // Use nested forEach to generate card objects
@@ -67,22 +70,28 @@ function buildMasterDeck() {
   });
   return deck;
 }
+
 function dealCard() {
-createCard();
-createCard();
+  createCard();
+  createCard();
+
+  if (dealBTN.style.display !== "none") {
+      dealBTN.style.display = "none";
+  } 
+}
+
+function addCard() {
+  createCard();
 }
 
 function createCard() {
    
     const cardEl = document.createElement('div'); 
     cardEl.className = `card ${shuffledDeck[Math.floor(Math.random()*shuffledDeck.length)].face}`;
-    cardContainer.appendChild(cardEl);
+    cardContainer.appendChild(cardEl);   
 }
 
-function addCard() {
-  const addEl.className = `card ${shuffledDeck[Math.floor(Math.random()*shuffledDeck.length)].face}`;
-  
-}
+
 
 
 
