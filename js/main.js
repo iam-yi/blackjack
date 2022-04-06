@@ -8,25 +8,29 @@ const masterDeck = buildMasterDeck();
 
 
 /*----- app's state (variables) -----*/
-let shuffledDeck = [];
-let dealerHand = [];
-let playerHand = [];
+let shuffledDeck;
+let dealerHand;
+let playerHand;
+let winner;
+let bankroll;
+let betAmt;
 
 
 
 /*----- cached element references -----*/
 const playerCardContainer = document.getElementById('playerCard');
 const dealerCardContainer = document.getElementById('dealerCard');
+const bankrollEl = document.querySelector('.money');
+const betEl = document.getElementById('currentBet');
+const chipsEl = document.getElementById('chips');
 
-/*----- event listeners -----*/
-//top of button
 const dealBTN = document.getElementById('deal-btn');
 const hitBTN = document.getElementById('hit-btn');
 const standBTN = document.getElementById('stand-btn');
 
+/*----- event listeners -----*/
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
-standBTN.addEventListener('click', gameStatus);
 
 //Score Display
 const playerScoreTxt = document.getElementById('player-score');
@@ -50,24 +54,28 @@ resetBTN.addEventListener('click', init);
 //top of button
 
 
-
-
 /*----- functions -----*/
 init();
 
 function init() {
-  shuffledDeck = getNewShuffledDeck();
+  winner = null;
+  playerHand = [];
+  dealerHand = [];
+  bankroll = 1000;
+  betAmt = 0;
+  render();
 }
 
 function render() {
-  console.log(shuffledDeck);
   renderHand();
+  renderControls();
+  renderScore();
 }
 
 function getNewShuffledDeck() {
   // Create a copy of the masterDeck (leave masterDeck untouched!)
   const tempDeck = [...masterDeck];
-
+  shuffledDeck = [];
   while (tempDeck.length) {
     // Get a random index for a card still in the tempDeck
     const rndIdx = Math.floor(Math.random() * tempDeck.length);
@@ -93,8 +101,19 @@ function buildMasterDeck() {
   return deck;
 }
 
+function handInProgress() {
+  return !winner && playerHand.length; // game first loading
+}
+
+function renderControls() {
+  dealBTN.style.visibility = !handInProgress() && betAmt ? 'visible' : 'hidden';
+  standBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
+  hitBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
+  chipsEl.style.visibility = handInProgress() ? 'hidden' : 'visible';
+}
+
 function renderHand() {
-  clearRenderHand();
+  playerCardContainer.innerHTML = dealerCardContainer.innerHTML = "";
   playerHand.forEach(function(card) {
     const cardEl = document.createElement('div'); 
     cardEl.className = `card ${card.face}`;
@@ -102,35 +121,20 @@ function renderHand() {
   })
   dealerHand.forEach(function(card, index) {
     const cardEl = document.createElement('div'); 
-    cardEl.className = index === 0 ? `card ${card.face}` : `card back`
+    cardEl.className = index === 0 && handInProgress() ? `card back` : `card ${card.face}` ;
     dealerCardContainer.appendChild(cardEl);   
-  });
-  cardScoreResult();
-}
-
-function clearRenderHand() {
-  Array.from(playerCardContainer.children).forEach(function(child) {
-    playerCardContainer.removeChild(child);
-  });
-
-  Array.from(dealerCardContainer.children).forEach(function(child) {
-    dealerCardContainer.removeChild(child);
   });
 }
 
 function dealCard() {
-  for(let i = 0; i<2; i++){
-    playerHand.push(shuffledDeck.pop());
-    dealerHand.push(shuffledDeck.pop());
-  }
-  if (dealBTN.style.display !== "none") {
-    dealBTN.style.display = "none";
-  } 
+  shuffledDeck = getNewShuffledDeck();
+  playerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
+  dealerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
   render();
 }
 
-function addCard() {
-    playerHand.push(shuffledDeck.pop());
+function addCard() { 
+      playerHand.push(shuffledDeck.pop());
     render();
 }
 
@@ -146,27 +150,40 @@ function selected100() {
   txt.innerHTML = 100;
 }
 
-function cardScoreResult() {
-  // Dealer Score at each round
-  const dealerSumScore = dealerHand.reduce(function(acc, cur) {
-    return acc + cur.value;
-  }, 0);
-  dealerScoreTxt.innerText = dealerSumScore;
-  //player Score at each round
-  const playerSumScore = playerHand.reduce(function(acc, cur) {
-      return acc + cur.value;
-  }, 0);
-  playerScoreTxt.innerText = playerSumScore;
+function computeScoreForHand(hand) {
+  let total = 0; 
+  let aces = 0;
+  hand.forEach(function(card) {
+    total += card.value;
+    if (card.value === 11) aces++;
+  });
+  while (total > 21 && aces) {
+    total -= 10;
+    aces--;
+  }
+  return total;
 }
 
-function gameStatus() {
-  if( cardScoreResult.dealerSumScore> cardScoreResult.playerSumScore) {
-    resultStatusTxt.innerHTML = "Dealer Win!!";
-  } else {
-    resultStatusTxt.innerHTML = "You Win!!";
-  }
-  render();
+function renderScore() {
+  // Dealer Score at each round
+  dealerScoreTxt.innerText = handInProgress() ? '' : computeScoreForHand(dealerHand);
+  //player Score at each round
+  playerScoreTxt.innerText = computeScoreForHand(playerHand);
 }
+
+// function gameStatus() {
+//   if(cardScoreResult.playerSumScore < 22 && cardScoreResult.dealerSumScore < 22) {
+//     if( cardScoreResult.dealerSumScore > cardScoreResult.playerSumScore) {
+//       resultStatusTxt.innerHTML = "Dealer Win!!";
+//     } else {
+//       resultStatusTxt.innerHTML = "You Win!!";
+//     }} else if(cardScoreResult.dealerSumScore > 22) {
+//       resultStatusTxt.innerHTML = "You Win!!";
+//     } else {
+//       resultStatusTxt.innerHTML = "Dealer Win!!";
+//     }
+//   render();
+// }
 
 
 
