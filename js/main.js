@@ -106,7 +106,7 @@ function handInProgress() {
 }
 
 function renderControls() {
-  dealBTN.style.visibility = !handInProgress() && betAmt ? 'visible' : 'hidden';
+  dealBTN.style.visibility = !handInProgress() ? 'visible' : 'hidden';
   standBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   hitBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   chipsEl.style.visibility = handInProgress() ? 'hidden' : 'visible';
