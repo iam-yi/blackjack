@@ -64,4 +64,9 @@ section{
   float: left;
 }
 
+span {
+  font-size: large;
+  background-color: white;
+}
+
 

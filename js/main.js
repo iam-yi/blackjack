@@ -15,11 +15,10 @@ let dealerHand = [];
 let playerHand = [];
 
 
+
 /*----- cached element references -----*/
 const playerCardContainer = document.getElementById('playerCard');
 const dealerCardContainer = document.getElementById('dealerCard');
-
-
 
 /*----- event listeners -----*/
 //top of button
@@ -29,6 +28,11 @@ const standBTN = document.getElementById('stand-btn');
 
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
+//standBTN.addEventListener('click', cardScoreResult);
+
+//Score Display
+const playerScoreTxt = document.getElementById('player-score');
+const dealerScoreTxt = document.getElementById('dealer-score');
 
 //money button
 const oneBTN = document.getElementById('chip1');
@@ -102,6 +106,7 @@ function renderHand() {
     cardEl.className = index === 0 ? `card ${card.face}` : `card back`
     dealerCardContainer.appendChild(cardEl);   
   });
+  cardScoreResult();
 }
 
 function clearRenderHand() {
@@ -142,6 +147,20 @@ function selected100() {
   txt.innerHTML = 100;
 }
 
+function cardScoreResult() {
+  // Dealer Score at each round
+  const dealerSumScore = dealerHand.reduce(function(acc, cur) {
+    return acc + cur.value;
+  }, 0);
+  dealerScoreTxt.innerText = dealerSumScore;
+  //player Score at each round
+  const playerSumScore = playerHand.reduce(function(acc, cur) {
+      return acc + cur.value;
+  }, 0);
+  playerScoreTxt.innerText = playerSumScore;
+
+  render();
+}
 
 
 
