@@ -1,9 +1,7 @@
 /*----- constants -----*/
 const suits = ['s', 'c', 'd', 'h'];
 const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A'];
-const chip1 = 1;
-const chip10 = 10;
-const chip100 = 100;
+
 
 // Build a 'master' deck of 'card' objects used to create shuffled decks
 const masterDeck = buildMasterDeck();
@@ -28,11 +26,12 @@ const standBTN = document.getElementById('stand-btn');
 
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
-//standBTN.addEventListener('click', cardScoreResult);
+standBTN.addEventListener('click', gameStatus);
 
 //Score Display
 const playerScoreTxt = document.getElementById('player-score');
 const dealerScoreTxt = document.getElementById('dealer-score');
+const resultStatusTxt = document.getElementById('result-status');
 
 //money button
 const oneBTN = document.getElementById('chip1');
@@ -158,7 +157,14 @@ function cardScoreResult() {
       return acc + cur.value;
   }, 0);
   playerScoreTxt.innerText = playerSumScore;
+}
 
+function gameStatus() {
+  if( cardScoreResult.dealerSumScore> cardScoreResult.playerSumScore) {
+    resultStatusTxt.innerHTML = "Dealer Win!!";
+  } else {
+    resultStatusTxt.innerHTML = "You Win!!";
+  }
   render();
 }
 
