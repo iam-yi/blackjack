@@ -2,11 +2,12 @@
 const suits = ['s', 'c', 'd', 'h'];
 const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A'];
 const MSGList = {
-  'T': 'Tie in this round',
+  null: "",
+  'T': 'Not Bad ...Tie in this round',
   'D': 'Dealer win in this round',
-  'P': 'You win in this round',
-  'PBJ': 'You hit the black Jack',
-  'DBJ': 'Dealer hit the blacer Jack'
+  'P': 'You win in this round!!!',
+  'PBJ': 'You hit the black Jack!!!',
+  'DBJ': 'Dealer hit the black Jack'
 };
 
 // Build a 'master' deck of 'card' objects used to create shuffled decks
@@ -76,7 +77,13 @@ function render() {
   renderScore();
   bankrollEl.innerHTML = bankroll;
   betEl.innerHTML = betAtm;
-  resultStatusTxt.innerHTML = winner;
+  resultStatusTxt.innerHTML = MSGList[winner];
+
+}
+
+function newHand() {
+  init();
+  
 }
 
 function getNewShuffledDeck() {
@@ -118,6 +125,7 @@ function renderControls() {
   standBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   hitBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   chipsEl.style.visibility = handInProgress() ? 'hidden' : 'visible';
+  resultStatusTxt.style.visibility = handInProgress() ? 'hidden' : 'visible';
 }
 
 function renderHand() {
@@ -143,21 +151,22 @@ function dealCard() {
   dealerTotal = computeScoreForHand(dealerHand);
   bankroll -= betAtm;
   if (dealerTotal === 21 && playerTotal === 21) {
-    winner = MSGList.T;
+    winner = 'P';
   } else if (dealerTotal === 21) {
-    winner = MSGList.DBJ;
+    winner = 'DBJ';
   } else if (playerTotal === 21) {
-    winner = MSGList.PBJ;
+    winner = 'PBJ';
   }
-  if (winner) settleBet();
   render();
 }
 
 function settleBet() {
   if (winner === 'PBJ') {
     bankroll += betAtm + (betAtm * 1.5);
-  } else if (outcome === 'P') {
+  } else if (winner === 'P') {
     bankroll += betAtm * 2;
+  } else if (winner === 'T') {
+    bankroll += betAtm;
   }
   bet = 0;
 }
@@ -166,7 +175,7 @@ function addCard() {
   playerHand.push(shuffledDeck.pop());
   playerTotal = computeScoreForHand(playerHand);
   if (playerTotal > 21) {
-    winner = MSGList.D;
+    winner = 'D';
   } 
   render();
 }
@@ -219,21 +228,18 @@ function HandleStand() {
     dealerTotal = computeScoreForHand(dealerHand);
   }
   if (dealerTotal > 21) {
-    winner = MSGList.P;
-    // settleBet();
-    // playerTotal = computeScoreForHand(playerTotal);
+    winner = 'P';
   } else {
     if(dealerTotal === playerTotal) { 
-      winner = MSGList.T;
+      winner = 'T';
     } else if (dealerTotal > playerTotal) { 
-      winner = MSGList.D;
+      winner = 'D';
     } else if (dealerTotal < playerTotal) { 
-      winner = MSGList.P;
-      // settleBet();
-      // playerTotal = computeScoreForHand(playerTotal);
+      winner = 'P';
     }
   }
-  render();
+  settleBet();
+ render();
 }
 
 
