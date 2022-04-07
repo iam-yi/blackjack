@@ -32,25 +32,25 @@ const bankrollEl = document.getElementById('bankroll');
 const dealBTN = document.getElementById('deal-btn');
 const hitBTN = document.getElementById('hit-btn');
 const standBTN = document.getElementById('stand-btn');
+const playagainBTN = document.getElementById('playagain-btn');
 
 /*----- event listeners -----*/
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
 standBTN.addEventListener('click', HandleStand);
-
+playagainBTN.addEventListener('click', handleNewHand);
 //Score Display
 const playerScoreTxt = document.getElementById('player-score');
 const dealerScoreTxt = document.getElementById('dealer-score');
 const resultStatusTxt = document.getElementById('result-status');
 
 //money button
-const oneBTN = document.getElementById('chip1');
+const fiveBTN = document.getElementById('chip5');
 const tenBTN = document.getElementById('chip10');
 const hundredBTN = document.getElementById('chip100');
 const txt = document.getElementById('currentBet');
 
-
-oneBTN.addEventListener('click', selected1);
+fiveBTN.addEventListener('click', selected5);
 tenBTN.addEventListener('click', selected10);
 hundredBTN.addEventListener('click', selected100);
 
@@ -65,7 +65,7 @@ function init() {
   winner = null;
   playerHand = [];
   dealerHand = [];
-  bankroll = 1000;
+  bankroll = 1000;       
   playerTotal = dealerTotal = 0;
   betAtm = 0;
   render();
@@ -78,12 +78,15 @@ function render() {
   bankrollEl.innerHTML = bankroll;
   betEl.innerHTML = betAtm;
   resultStatusTxt.innerHTML = MSGList[winner];
-
 }
 
-function newHand() {
-  init();
-  
+function handleNewHand() {
+  winner = null;
+  playerHand = [];
+  dealerHand = []; 
+  playerTotal = dealerTotal = 0;
+  betAtm = 0;
+  render();
 }
 
 function getNewShuffledDeck() {
@@ -121,11 +124,12 @@ function handInProgress() {
 }
 
 function renderControls() {
-  dealBTN.style.visibility = !handInProgress() && betAtm ? 'visible' : 'hidden';
+  dealBTN.style.visibility = !handInProgress() && betAtm && !winner ? 'visible' : 'hidden';
   standBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   hitBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   chipsEl.style.visibility = handInProgress() ? 'hidden' : 'visible';
   resultStatusTxt.style.visibility = handInProgress() ? 'hidden' : 'visible';
+  playagainBTN.style.visibility = !winner ? 'hidden' : 'visible';
 }
 
 function renderHand() {
@@ -176,13 +180,13 @@ function addCard() {
   playerTotal = computeScoreForHand(playerHand);
   if (playerTotal > 21) {
     winner = 'D';
-  } 
+  }
   render();
 }
 
-function selected1() {
-  betAtm = 1;
-  txt.innerHTML = 1;
+function selected5() {
+  betAtm = 5;
+  txt.innerHTML = 5;
   renderControls();
 }
 
@@ -222,24 +226,24 @@ function renderScore() {
 function HandleStand() {
   playerTotal = computeScoreForHand(playerHand);
   dealerTotal = computeScoreForHand(dealerHand);
-  
+
   if (dealerTotal < 17) {
-    dealerHand.push(shuffledDeck.pop()); 
+    dealerHand.push(shuffledDeck.pop());
     dealerTotal = computeScoreForHand(dealerHand);
   }
   if (dealerTotal > 21) {
     winner = 'P';
   } else {
-    if(dealerTotal === playerTotal) { 
+    if (dealerTotal === playerTotal) {
       winner = 'T';
-    } else if (dealerTotal > playerTotal) { 
+    } else if (dealerTotal > playerTotal) {
       winner = 'D';
-    } else if (dealerTotal < playerTotal) { 
+    } else if (dealerTotal < playerTotal) {
       winner = 'P';
     }
   }
   settleBet();
- render();
+  render();
 }
 
 
