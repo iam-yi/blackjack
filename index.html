@@ -4,12 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>repl.it</title>
+    <title>Black Jack</title>
     <link href="css/card-deck-css/css/cardstarter.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" />
     <script defer src="js/main.js"></script>
 </head>
-
 <body>
     <h1>Welcome to SEI Casino</h1>
     <p>Now is you have XX dollars</p>
@@ -21,6 +20,7 @@
             <button id="deal-btn">Deal</button>
             <!-- <button>Split</button> -->
         </div>
+
         <div id="dealerCard"></div>
         <span id="dealer-score"></span>
         <div id="playerCard"></div>
@@ -32,18 +32,18 @@
             <button id="chip10"><img src="img/10.jpeg"></button>
             <button id="chip100"><img src="img/100.jpeg"></button>
         </div>
+
         <div id="textBox">
+            <label for="BankrooLabel"> Your Current Bankroll </label>
+            <span id="bankroll"></span><br><br>
             <label for="currentBet"> Your Bet In This Round: </label>
             <span id="currentBet"></span><br><br>
             <span id="result-status"></span>
-
         </div>
     </section>
     <div id="game-btn">
         <button id="reset-btn">Reset</button>
         <button>Cash Out</button>
     </div>
-
 </body>
-
 </html>

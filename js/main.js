@@ -9,10 +9,8 @@ const MSGList = {
   'DBJ': 'Dealer hit the blacer Jack'
 };
 
-
 // Build a 'master' deck of 'card' objects used to create shuffled decks
 const masterDeck = buildMasterDeck();
-
 
 /*----- app's state (variables) -----*/
 let shuffledDeck;
@@ -26,10 +24,10 @@ let playerTotal, dealerTotal;
 /*----- cached element references -----*/
 const playerCardContainer = document.getElementById('playerCard');
 const dealerCardContainer = document.getElementById('dealerCard');
-const bankrollEl = document.querySelector('.money');
 const betEl = document.getElementById('currentBet');
 const chipsEl = document.getElementById('chips');
-
+const bankrollEl = document.getElementById('bankroll');
+//Top of Game Button
 const dealBTN = document.getElementById('deal-btn');
 const hitBTN = document.getElementById('hit-btn');
 const standBTN = document.getElementById('stand-btn');
@@ -38,7 +36,6 @@ const standBTN = document.getElementById('stand-btn');
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
 standBTN.addEventListener('click', HandleStand);
-
 
 //Score Display
 const playerScoreTxt = document.getElementById('player-score');
@@ -50,6 +47,7 @@ const oneBTN = document.getElementById('chip1');
 const tenBTN = document.getElementById('chip10');
 const hundredBTN = document.getElementById('chip100');
 const txt = document.getElementById('currentBet');
+
 
 oneBTN.addEventListener('click', selected1);
 tenBTN.addEventListener('click', selected10);
@@ -122,7 +120,6 @@ function renderControls() {
   chipsEl.style.visibility = handInProgress() ? 'hidden' : 'visible';
 }
 
-
 function renderHand() {
   playerCardContainer.innerHTML = dealerCardContainer.innerHTML = "";
   playerHand.forEach(function (card) {
@@ -141,10 +138,10 @@ function dealCard() {
   shuffledDeck = getNewShuffledDeck();
   playerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
   dealerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
-
   // Check for Blackjack
   playerTotal = computeScoreForHand(playerHand);
   dealerTotal = computeScoreForHand(dealerHand);
+  bankroll -= betAtm;
   if (dealerTotal === 21 && playerTotal === 21) {
     winner = MSGList.T;
   } else if (dealerTotal === 21) {
@@ -158,9 +155,9 @@ function dealCard() {
 
 function settleBet() {
   if (winner === 'PBJ') {
-    bankroll += bet + (bet * 1.5);
+    bankroll += betAtm + (betAtm * 1.5);
   } else if (outcome === 'P') {
-    bankroll += bet * 2;
+    bankroll += betAtm * 2;
   }
   bet = 0;
 }
@@ -170,7 +167,7 @@ function addCard() {
   playerTotal = computeScoreForHand(playerHand);
   if (playerTotal > 21) {
     winner = MSGList.D;
-  }
+  } 
   render();
 }
 
@@ -216,19 +213,24 @@ function renderScore() {
 function HandleStand() {
   playerTotal = computeScoreForHand(playerHand);
   dealerTotal = computeScoreForHand(dealerHand);
-  while (dealerTotal < 17) {
-    dealerHand.push(shuffledDeck.pop());
+  
+  if (dealerTotal < 17) {
+    dealerHand.push(shuffledDeck.pop()); 
+    dealerTotal = computeScoreForHand(dealerHand);
   }
-
   if (dealerTotal > 21) {
     winner = MSGList.P;
+    // settleBet();
+    // playerTotal = computeScoreForHand(playerTotal);
   } else {
-    if(dealerTotal === playerTotal) { // not working when draw extra cards
+    if(dealerTotal === playerTotal) { 
       winner = MSGList.T;
-    } else if (dealerTotal > playerTotal) { // not working when draw extra cards.
+    } else if (dealerTotal > playerTotal) { 
       winner = MSGList.D;
     } else if (dealerTotal < playerTotal) { 
       winner = MSGList.P;
+      // settleBet();
+      // playerTotal = computeScoreForHand(playerTotal);
     }
   }
   render();
