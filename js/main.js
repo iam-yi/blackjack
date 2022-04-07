@@ -1,6 +1,13 @@
 /*----- constants -----*/
 const suits = ['s', 'c', 'd', 'h'];
 const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A'];
+const MSGList = {
+  'T': 'Tie in this round',
+  'D': 'Dealer win in this round',
+  'P': 'You win in this round',
+  'PBJ': 'You hit the black Jack',
+  'DBJ': 'Dealer hit the blacer Jack'
+};
 
 
 // Build a 'master' deck of 'card' objects used to create shuffled decks
@@ -13,9 +20,8 @@ let dealerHand;
 let playerHand;
 let winner;
 let bankroll;
-let betAmt;
-
-
+let betAtm;
+let playerTotal, dealerTotal;
 
 /*----- cached element references -----*/
 const playerCardContainer = document.getElementById('playerCard');
@@ -31,6 +37,8 @@ const standBTN = document.getElementById('stand-btn');
 /*----- event listeners -----*/
 dealBTN.addEventListener('click', dealCard);
 hitBTN.addEventListener('click', addCard);
+standBTN.addEventListener('click', HandleStand);
+
 
 //Score Display
 const playerScoreTxt = document.getElementById('player-score');
@@ -41,7 +49,7 @@ const resultStatusTxt = document.getElementById('result-status');
 const oneBTN = document.getElementById('chip1');
 const tenBTN = document.getElementById('chip10');
 const hundredBTN = document.getElementById('chip100');
-const txt= document.getElementById('currentBet');
+const txt = document.getElementById('currentBet');
 
 oneBTN.addEventListener('click', selected1);
 tenBTN.addEventListener('click', selected10);
@@ -51,9 +59,6 @@ hundredBTN.addEventListener('click', selected100);
 const resetBTN = document.getElementById('reset-btn');
 
 resetBTN.addEventListener('click', init);
-//top of button
-
-
 /*----- functions -----*/
 init();
 
@@ -62,7 +67,8 @@ function init() {
   playerHand = [];
   dealerHand = [];
   bankroll = 1000;
-  betAmt = 0;
+  playerTotal = dealerTotal = 0;
+  betAtm = 0;
   render();
 }
 
@@ -70,6 +76,9 @@ function render() {
   renderHand();
   renderControls();
   renderScore();
+  bankrollEl.innerHTML = bankroll;
+  betEl.innerHTML = betAtm;
+  resultStatusTxt.innerHTML = winner;
 }
 
 function getNewShuffledDeck() {
@@ -88,8 +97,8 @@ function getNewShuffledDeck() {
 function buildMasterDeck() {
   const deck = [];
   // Use nested forEach to generate card objects
-  suits.forEach(function(suit) {
-    ranks.forEach(function(rank) {
+  suits.forEach(function (suit) {
+    ranks.forEach(function (rank) {
       deck.push({
         // The 'face' property maps to the library's CSS classes for cards
         face: `${suit}${rank}`,
@@ -102,27 +111,29 @@ function buildMasterDeck() {
 }
 
 function handInProgress() {
-  return !winner && playerHand.length; // game first loading
+  // game first loading
+  return !winner && playerHand.length;
 }
 
 function renderControls() {
-  dealBTN.style.visibility = !handInProgress() ? 'visible' : 'hidden';
+  dealBTN.style.visibility = !handInProgress() && betAtm ? 'visible' : 'hidden';
   standBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   hitBTN.style.visibility = handInProgress() ? 'visible' : 'hidden';
   chipsEl.style.visibility = handInProgress() ? 'hidden' : 'visible';
 }
 
+
 function renderHand() {
   playerCardContainer.innerHTML = dealerCardContainer.innerHTML = "";
-  playerHand.forEach(function(card) {
-    const cardEl = document.createElement('div'); 
+  playerHand.forEach(function (card) {
+    const cardEl = document.createElement('div');
     cardEl.className = `card ${card.face}`;
-    playerCardContainer.appendChild(cardEl);   
+    playerCardContainer.appendChild(cardEl);
   })
-  dealerHand.forEach(function(card, index) {
-    const cardEl = document.createElement('div'); 
-    cardEl.className = index === 0 && handInProgress() ? `card back` : `card ${card.face}` ;
-    dealerCardContainer.appendChild(cardEl);   
+  dealerHand.forEach(function (card, index) {
+    const cardEl = document.createElement('div');
+    cardEl.className = index === 0 && handInProgress() ? `card back` : `card ${card.face}`;
+    dealerCardContainer.appendChild(cardEl);
   });
 }
 
@@ -130,30 +141,61 @@ function dealCard() {
   shuffledDeck = getNewShuffledDeck();
   playerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
   dealerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
+
+  // Check for Blackjack
+  playerTotal = computeScoreForHand(playerHand);
+  dealerTotal = computeScoreForHand(dealerHand);
+  if (dealerTotal === 21 && playerTotal === 21) {
+    winner = MSGList.T;
+  } else if (dealerTotal === 21) {
+    winner = MSGList.DBJ;
+  } else if (playerTotal === 21) {
+    winner = MSGList.PBJ;
+  }
+  if (winner) settleBet();
   render();
 }
 
-function addCard() { 
-      playerHand.push(shuffledDeck.pop());
-    render();
+function settleBet() {
+  if (winner === 'PBJ') {
+    bankroll += bet + (bet * 1.5);
+  } else if (outcome === 'P') {
+    bankroll += bet * 2;
+  }
+  bet = 0;
+}
+
+function addCard() {
+  playerHand.push(shuffledDeck.pop());
+  playerTotal = computeScoreForHand(playerHand);
+  if (playerTotal > 21) {
+    winner = MSGList.D;
+  }
+  render();
 }
 
 function selected1() {
+  betAtm = 1;
   txt.innerHTML = 1;
-} 
-  
+  renderControls();
+}
+
 function selected10() {
+  betAtm = 10;
   txt.innerHTML = 10;
+  renderControls();
 }
 
 function selected100() {
+  betAtm = 100;
   txt.innerHTML = 100;
+  renderControls();
 }
 
 function computeScoreForHand(hand) {
-  let total = 0; 
+  let total = 0;
   let aces = 0;
-  hand.forEach(function(card) {
+  hand.forEach(function (card) {
     total += card.value;
     if (card.value === 11) aces++;
   });
@@ -171,19 +213,26 @@ function renderScore() {
   playerScoreTxt.innerText = computeScoreForHand(playerHand);
 }
 
-// function gameStatus() {
-//   if(cardScoreResult.playerSumScore < 22 && cardScoreResult.dealerSumScore < 22) {
-//     if( cardScoreResult.dealerSumScore > cardScoreResult.playerSumScore) {
-//       resultStatusTxt.innerHTML = "Dealer Win!!";
-//     } else {
-//       resultStatusTxt.innerHTML = "You Win!!";
-//     }} else if(cardScoreResult.dealerSumScore > 22) {
-//       resultStatusTxt.innerHTML = "You Win!!";
-//     } else {
-//       resultStatusTxt.innerHTML = "Dealer Win!!";
-//     }
-//   render();
-// }
+function HandleStand() {
+  playerTotal = computeScoreForHand(playerHand);
+  dealerTotal = computeScoreForHand(dealerHand);
+  while (dealerTotal < 17) {
+    dealerHand.push(shuffledDeck.pop());
+  }
+
+  if (dealerTotal > 21) {
+    winner = MSGList.P;
+  } else {
+    if(dealerTotal === playerTotal) { // not working when draw extra cards
+      winner = MSGList.T;
+    } else if (dealerTotal > playerTotal) { // not working when draw extra cards.
+      winner = MSGList.D;
+    } else if (dealerTotal < playerTotal) { 
+      winner = MSGList.P;
+    }
+  }
+  render();
+}
 
 
 
