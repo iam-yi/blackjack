@@ -1,5 +1,5 @@
-# blackjack
-
+# Blackjack
+## Project 1 (P1) 
 
 
 Game Screen: 
