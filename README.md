@@ -32,7 +32,7 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 ![CSS3](https://img.shields.io/badge/-CSS-333?style=flat&logo=css3)
 
 ### Getting Started
-[blackjack game link]( https://github.com/iam-yi/blackjack.git) <br>
+[blackjack game link](https://iam-yi.github.io/blackjack/) <br>
 
 
 ### Next Steps
