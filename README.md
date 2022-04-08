@@ -1,10 +1,4 @@
-<p align="center">
-
-[Green & Red Poker Las Vegas Business Card.pdf](https://github.com/iam-yi/blackjack/files/8448595/Green.Red.Poker.Las.Vegas.Business.Card.pdf)
-
-<p>
-
-<div align="center">
+<div align="center"> 
 
 #  :black_joker: BlackJack  :black_joker:
 ## Project 1  (P1) 
@@ -15,16 +9,14 @@
 <a href="https://www.linkedin.com/in/msyili/" target="_blank">
     <img src="https://img.shields.io/badge/-linkedin.com/in/user-blue?style=flat&``logo=Linkedin&logoColor=white">
  </a> 
-<a href="mailto:user@gmail.com" target="_blank">
+<a href="mailto:yli3623@gmail.com" target="_blank">
     <img src="https://img.shields.io/badge/-user@gmail.com-c14438?style=flat&logo=Gmail&``logoColor=white">
 </a>
-
 </div>
 
 
 ### :memo: Game Introduction  
 Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal either 1 or 11.
-
  2 ways to win each game:  
 * Equal 21 points ==> hit the black Jack, and your money will be doule
 * Under 21 points ==> Your cards total need to be greater than dealer's. 
@@ -32,13 +24,17 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 
 ### :camera: ScreenShots
 
+
+
 ### :wrench:Teachnologies Used
 ![HTML5](https://img.shields.io/badge/-HTML5-333?style=flat&logo=html5)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-333?style=flat&logo=javascript) 
 ![CSS3](https://img.shields.io/badge/-CSS-333?style=flat&logo=css3)
 
 ### Getting Started
-[blackjack game link](https://www.example.com)
+[blackjack game link](https://www.example.com) <br>
+
+
 ### Next Steps
 - [ ] Add music to the page
 

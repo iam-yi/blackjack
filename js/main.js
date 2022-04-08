@@ -11,7 +11,6 @@ const MSGList = {
   'NM': 'Sorry, you have lost all your money'
 };
 
-// Build a 'master' deck of 'card' objects used to create shuffled decks
 const masterDeck = buildMasterDeck();
 
 /*----- app's state (variables) -----*/
@@ -104,6 +103,7 @@ function getNewShuffledDeck() {
 }
 
 function buildMasterDeck() {
+  // Build a 'master' deck of 'card' objects used to create shuffled decks
   const deck = [];
   // Use nested forEach to generate card objects
   suits.forEach(function (suit) {
@@ -234,7 +234,6 @@ function HandleStand() {
     dealerHand.push(shuffledDeck.pop());
     dealerTotal = computeScoreForHand(dealerHand);
   }
-  // missing player  = 21 hit the black Jack
   if (dealerTotal > 21) {
     winner = 'P';
   } else {

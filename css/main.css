@@ -4,10 +4,20 @@ html, * {
  
 html, body {
   height: 100%;
+  background: url("../img/table.jpeg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:100%;
+  width: 100%;
 } 
 
-h1,p {
+h1 {
   text-align: center;
+  background-color: black;
+  color: white;
+  padding: 0;
 }
 
 .card-container {
@@ -27,44 +37,31 @@ button {
   border: 1px solid grey;
   border-radius: 4px;
   outline: none;
+  color: black;
 }
 
 button:hover {
   background-color: grey;
   color: white;
+  
 }
 
-#table-btn, #game-btn {
+#result-status {
+  background-color: black;
+  color: white;
+
+}
+
+#table-btn {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
-
-section{
-  background: url("../img/table.jpeg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height:100%;
-  width: 100%;
-}
-
-.money {
-  box-sizing: border-box;
-  display: inline-block;
-  margin: 5px 5px 50px 5px;
-  cursor: pointer;
-  /* Scale and set the background settings. */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  /* "Hide" any text within the element (use text to be
-     simply compliant with screen readers, etc.). */
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
+#chips {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
  #chip5, #chip10, #chip100 {
@@ -82,6 +79,11 @@ section{
 }
 #chip100 {
   background-image: url("../img/100-chip.svg");
+}
+#textbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 span {
