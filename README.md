@@ -2,15 +2,26 @@
 
 #  :black_joker: BlackJack  :black_joker:
 ## Project 1  (P1) 
+<h5>Yi Li</h5>
+<a href="https://msyili.com" target="_blank">
+    <img src="https://img.shields.io/badge/-Portfolio:_user.github.io-darkgreen?style=flat&logo=medium"/>
+</a>
+<a href="https://www.linkedin.com/in/msyili/" target="_blank">
+    <img src="https://img.shields.io/badge/-linkedin.com/in/user-blue?style=flat&``logo=Linkedin&logoColor=white">
+ </a> 
+<a href="mailto:user@gmail.com" target="_blank">
+    <img src="https://img.shields.io/badge/-user@gmail.com-c14438?style=flat&logo=Gmail&``logoColor=white">
+</a>
 
 </div>
+
 
 ### :memo: Game Introduction  
 Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal either 1 or 11.
 
  2 ways to win each game:  
-* Equal 21 points ==> hit the black which get double of the money
-* Under 21 points ==> Your cards total would be greater than dealer's. 
+* Equal 21 points ==> hit the black Jack, and your money will be doule
+* Under 21 points ==> Your cards total need to be greater than dealer's. 
 
 
 ### :camera: ScreenShots
@@ -23,9 +34,9 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 ### Getting Started
 [blackjack game link](https://www.example.com)
 ### Next Steps
+* CSS: need to spend more time to work on 
+* JavaScript: use render more instead Dom; 
 
-
-
-[^1]: Created on March 8, 2022. 
+Created on March 8, 2022. 
 
 
