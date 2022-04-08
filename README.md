@@ -23,8 +23,14 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 
 
 ### :camera: ScreenShots
+<details>
+<summary> Game In Progress</summary>
 
-
+| Description | Screenshot |
+|------------ | ------------|
+| <h3 align="center">Home Page</h3> | <img width="1001" alt="Screen Shot 2022-04-08 at 8 32 39 AM" src="https://user-images.githubusercontent.com/101530796/162476772-09b1db42-bddb-41e6-a660-4a25f770c09a.png" width="700"/>
+| <h3 align="center">Game In Progress</h3> | <img width="381" alt="Screen Shot 2022-04-08 at 8 16 49 AM" src="https://user-images.githubusercontent.com/101530796/162476963-ca5bcdc8-5a9d-4127-8041-dc409e923cd1.png" width="700"> |
+</details>
 
 ### :wrench:Teachnologies Used
 ![HTML5](https://img.shields.io/badge/-HTML5-333?style=flat&logo=html5)
@@ -44,5 +50,3 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 
 
 Created on March 8, 2022. 
-
-
