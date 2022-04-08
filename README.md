@@ -1,31 +1,25 @@
-<div align="center">
-#  BlackJack
+
+#  :black_joker: BlackJack  :black_joker:
 ## Project 1 (P1) 
 
-### Game Introduction   
+### Game Introduction  
+Each card number repersent its value, expect J,Q,K are eqaul to 10, A's either equal 1 or 11.
+
+2 ways to win each game:
+* Equal 21 points ==> hit the black which get double of the money
+* Under 21 points ==> Your cards total would be greater than dealer's. 
 
 
+### ScreenShots
 
-Game Screen: 
-1. Define requried constants:
-Money value: $1, $10, $100;
+### Teachnologies Used
 
-2. Define required vaiables used to track the state of the games
-- currentMoney;
-- pokerPoints(current round poker score)
-- gameStatus: Win-> + ; loose -> -
+### Getting Started
+[title](https://www.example.com)
+### Next Steps
 
 
-3. Store elements on the page 
+### Footnote
+Created on March 7, 2022.
 
-4. loading the app:
 
-5. handle a player clicking the gamble table button 
-    hit button:
-    stay butoon:
-    all in:
-
-6. handle a oa player clicking reset and next button;
-
-    resetBtn 
-    nextBtn
