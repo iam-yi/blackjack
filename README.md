@@ -9,8 +9,8 @@
 Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal either 1 or 11.
 
  2 ways to win each game:  
-:moneybag: Equal 21 points ==> hit the black which get double of the money
-:moneybag: Under 21 points ==> Your cards total would be greater than dealer's. 
+* Equal 21 points ==> hit the black which get double of the money
+* Under 21 points ==> Your cards total would be greater than dealer's. 
 
 
 ### :camera: ScreenShots
