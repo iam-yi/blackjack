@@ -7,7 +7,8 @@ const MSGList = {
   'D': 'Dealer win in this round',
   'P': 'You win in this round!!!',
   'PBJ': 'You hit the black Jack!!!',
-  'DBJ': 'Dealer hit the black Jack'
+  'DBJ': 'Dealer hit the black Jack',
+  'NM': 'Sorry, you have lost all your money'
 };
 
 // Build a 'master' deck of 'card' objects used to create shuffled decks
@@ -65,7 +66,7 @@ function init() {
   winner = null;
   playerHand = [];
   dealerHand = [];
-  bankroll = 1000;       
+  bankroll = 1000;
   playerTotal = dealerTotal = 0;
   betAtm = 0;
   render();
@@ -83,7 +84,7 @@ function render() {
 function handleNewHand() {
   winner = null;
   playerHand = [];
-  dealerHand = []; 
+  dealerHand = [];
   playerTotal = dealerTotal = 0;
   betAtm = 0;
   render();
@@ -147,20 +148,22 @@ function renderHand() {
 }
 
 function dealCard() {
-  shuffledDeck = getNewShuffledDeck();
-  playerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
-  dealerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
-  // Check for Blackjack
-  playerTotal = computeScoreForHand(playerHand);
-  dealerTotal = computeScoreForHand(dealerHand);
-  bankroll -= betAtm;
-  if (dealerTotal === 21 && playerTotal === 21) {
-    winner = 'P';
-  } else if (dealerTotal === 21) {
-    winner = 'DBJ';
-  } else if (playerTotal === 21) {
-    winner = 'PBJ';
-  }
+  if (bankroll > betAtm) {
+    shuffledDeck = getNewShuffledDeck();
+    playerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
+    dealerHand.push(shuffledDeck.pop(), shuffledDeck.pop());
+    // Check for Blackjack
+    playerTotal = computeScoreForHand(playerHand);
+    dealerTotal = computeScoreForHand(dealerHand);
+    bankroll -= betAtm;
+    if (dealerTotal === 21 && playerTotal === 21) {
+      winner = 'P';
+    } else if (dealerTotal === 21) {
+      winner = 'DBJ';
+    } else if (playerTotal === 21) {
+      winner = 'PBJ';
+    }
+  } else winner = 'NM';
   render();
 }
 
@@ -227,10 +230,11 @@ function HandleStand() {
   playerTotal = computeScoreForHand(playerHand);
   dealerTotal = computeScoreForHand(dealerHand);
 
-  if (dealerTotal < 17) {
+  while (dealerTotal < 17) {
     dealerHand.push(shuffledDeck.pop());
     dealerTotal = computeScoreForHand(dealerHand);
   }
+  // missing player  = 21 hit the black Jack
   if (dealerTotal > 21) {
     winner = 'P';
   } else {
@@ -239,7 +243,9 @@ function HandleStand() {
     } else if (dealerTotal > playerTotal) {
       winner = 'D';
     } else if (dealerTotal < playerTotal) {
-      winner = 'P';
+      if (playerTotal === 21) {
+        winner = 'PBJ';
+      } else winner = 'P';
     }
   }
   settleBet();

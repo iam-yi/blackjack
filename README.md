@@ -1,5 +1,9 @@
-# Blackjack
+<div align="center">
+#  BlackJack
 ## Project 1 (P1) 
+
+### Game Introduction   
+
 
 
 Game Screen: 

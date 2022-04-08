@@ -49,7 +49,7 @@ section{
   -o-background-size: cover;
   background-size: cover;
   height:100%;
-  width: 1500px;
+  width: 100%;
 }
 
 .money {
@@ -65,9 +65,11 @@ section{
   width: auto;
   float: left;
 }
+
 #chip5 {
   background-image: url("../img/5-chip.svg");
 }
+
 #chip10 {
   background-image: url("../img/10-chip.svg");
 }
