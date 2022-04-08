@@ -1,25 +1,27 @@
 
 #  :black_joker: BlackJack  :black_joker:
-## Project 1 (P1) 
+## Project 1  (P1) 
 
-### Game Introduction  
+### :memo: Game Introduction  
 Each card number repersent its value, expect J,Q,K are eqaul to 10, A's either equal 1 or 11.
 
-2 ways to win each game:
+2 ways to win each game:  :moneybag:  :moneybag: :moneybag:
 * Equal 21 points ==> hit the black which get double of the money
 * Under 21 points ==> Your cards total would be greater than dealer's. 
 
 
-### ScreenShots
+### :camera: ScreenShots
 
-### Teachnologies Used
-
+### :wrench:Teachnologies Used
+:point_right: HTML
+:point_right: JavaScript
+:point_right: CSS
 ### Getting Started
-[title](https://www.example.com)
+[blackjack game link](https://www.example.com)
 ### Next Steps
 
 
 ### Footnote
-Created on March 7, 2022.
+Created on March 8, 2022.
 
 

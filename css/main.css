@@ -34,7 +34,6 @@ button:hover {
   color: white;
 }
 
-
 #table-btn, #game-btn {
   display: flex;
   flex-direction: row;
@@ -53,17 +52,25 @@ section{
 }
 
 .money {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-around;
-} 
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 5px 5px 50px 5px;
+  cursor: pointer;
+  /* Scale and set the background settings. */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  /* "Hide" any text within the element (use text to be
+     simply compliant with screen readers, etc.). */
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
  #chip5, #chip10, #chip100 {
-  border-radius: 50%;
-  height: auto;
-  width: auto;
-  float: left;
+  border-radius: 25px;
+  width: 50px;
+  height: 50px;
 }
 
 #chip5 {
