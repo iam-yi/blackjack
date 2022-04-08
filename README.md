@@ -1,3 +1,9 @@
+<p align="center">
+
+[Green & Red Poker Las Vegas Business Card.pdf](https://github.com/iam-yi/blackjack/files/8448595/Green.Red.Poker.Las.Vegas.Business.Card.pdf)
+
+<p>
+
 <div align="center">
 
 #  :black_joker: BlackJack  :black_joker:
@@ -34,8 +40,12 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 ### Getting Started
 [blackjack game link](https://www.example.com)
 ### Next Steps
-* CSS: need to spend more time to work on 
-* JavaScript: use render more instead Dom; 
+- [ ] Add music to the page
+
+- [ ] The highest top score on this website 
+
+- [ ] Add a user's profile  
+
 
 Created on March 8, 2022. 
 
