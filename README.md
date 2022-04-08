@@ -2,6 +2,7 @@
 
 #  :black_joker: BlackJack  :black_joker:
 ## Project 1  (P1) 
+
 <h5>Yi Li</h5>
 <a href="https://msyili.com" target="_blank">
     <img src="https://img.shields.io/badge/-Portfolio:_user.github.io-darkgreen?style=flat&logo=medium"/>
@@ -23,7 +24,15 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 
 
 ### :camera: ScreenShots
+<details>
+<summary> Game in Progress ScreenShots</summary>
 
+| Description | Screenshot |
+|------------ | ------------|
+| <h3 align="center">Home Page</h3> | <img width="1001" alt="Screen Shot 2022-04-08 at 8 32 39 AM" src="https://user-images.githubusercontent.com/101530796/162474789-74386979-c434-4503-9fdf-1ff4f1434959.png" width="700"/>
+| <h3 align="center">Home Page</h3> |  <img width="381" alt="Screen Shot 2022-04-08 at 8 16 49 AM" src="https://user-images.githubusercontent.com/101530796/162474096-3bc7281b-a159-4ce2-8a3c-f756ed93e7a0.png" width="700"/>
+| <h3 align="center">Profile Page</h3> | <img width="325" alt="Screen Shot 2022-04-08 at 8 17 08 AM" src="https://user-images.githubusercontent.com/101530796/162474339-4d89f9ab-a0da-40c0-b21b-1db6bb1d52d0.png" width="700"> |
+</details>
 
 
 ### :wrench:Teachnologies Used
@@ -42,7 +51,7 @@ Each card number repersent its value, expect J,Q,K are eqaul to 10, A equal eith
 
 - [ ] Add a user's profile  
 
-
 Created on March 8, 2022. 
+
 
 
